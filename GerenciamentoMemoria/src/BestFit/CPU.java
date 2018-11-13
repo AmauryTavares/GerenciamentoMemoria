@@ -59,7 +59,9 @@ public class CPU extends Thread{
 				int contAnterior = processos.size();
 				if (processos.get(i).isAlive()) {
 					System.out.println("Processo: " + processos.get(i).getNumProcesso() + " foi escalonado para a CPU.");
-					processos.get(i).setEstado("execucao");
+					if (processos.get(i).getEstado().equals("pronto")) {
+						processos.get(i).setEstado("execucao");
+					}
 					processos.get(i).resume();
 				} else {
 					sucesso = gerenciadorMemoria.alocar(false, processos.get(i), memoriasAlocada, memoriasDisponivel, pagina, memoriaTotal);
@@ -73,13 +75,13 @@ public class CPU extends Thread{
 		
 				}
 				if (sucesso) {
-					for (int x = 0; x < 100; x++) {
+					for (int x = 0; x < 1000; x++) {
 						if (processos.get(i).getEstado().equals("encerrado")) {
-							x = 100;
+							x = 1000;
 							gerenciadorMemoria.desalocar(processos.get(i), memoriasAlocada, memoriasDisponivel, memoriaTotal);
 							processos.remove(i);
 						}
-						Thread.sleep(50);
+						Thread.sleep(5);
 					}
 				
 					if (processos.size() == contAnterior && processos.size() != 1) {	// Processos se mantem 
