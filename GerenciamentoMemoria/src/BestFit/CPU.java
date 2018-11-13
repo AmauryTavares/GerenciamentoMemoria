@@ -85,7 +85,7 @@ public class CPU extends Thread{
 					if (processos.size() == contAnterior && processos.size() != 1) {	// Processos se mantem 
 						System.out.println("Processo: " + processos.get(i).getNumProcesso() + " foi pausado e retirado da CPU.\n");
 						processos.get(i).suspend();
-						processos.get(i).setEstado("bloqueado");
+						processos.get(i).setEstado("pronto");
 						i = (i + 1) % processos.size();
 					} else if (processos.size() != contAnterior && i >= processos.size()) {	// Processo removido e eh o ultimo
 						i = 0;

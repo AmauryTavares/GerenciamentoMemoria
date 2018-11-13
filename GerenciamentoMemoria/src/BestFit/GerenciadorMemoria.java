@@ -23,13 +23,22 @@ public class GerenciadorMemoria {
 		
 		if (melhor != null && melhor.getTamanho() >= memoriaNecessaria) {
 			EstruturaGerenciamento memoriaAlocada = new EstruturaGerenciamento(processo, melhor.getPosicaoInicial(),
-					memoriaNecessaria + (pagina - memoriaNecessaria % pagina));
+					memoriaNecessaria);
+			
+			if ((memoriaNecessaria % pagina) > 0) {
+				memoriaAlocada.setTamanho(memoriaAlocada.getTamanho() + (pagina - memoriaNecessaria % pagina));
+			}
+			
 			listaMemoriasAlocada.add(memoriaAlocada);
 			
 			melhor.setPosicaoInicial(melhor.getPosicaoInicial() + memoriaAlocada.getTamanho());
 			melhor.setTamanho(melhor.getTamanho() - memoriaAlocada.getTamanho());
 			sucesso = true;
 			System.out.println("Foi alocado " + memoriaAlocada.getTamanho() + " MB do processo " + processo.getNumProcesso() + ".");
+			
+			if (melhor.getTamanho() == 0) {
+				listaMemoriasDisponivel.remove(melhor);
+			}
 			
 			mostrarTabela(listaMemoriasAlocada, listaMemoriasDisponivel, memoriaTotal);
 		} else {

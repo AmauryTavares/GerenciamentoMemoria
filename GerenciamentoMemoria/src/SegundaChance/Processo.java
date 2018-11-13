@@ -31,7 +31,7 @@ public class Processo extends Thread{
 		
 		Random rand = new Random();
 		
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 10; i++) {
 			try {
 				int paginaSelecionada = paginasVituais.get(rand.nextInt(paginasVituais.size()));
 				System.out.println("O Processo " + numProcesso + " solicitou a pagina virtual " + paginaSelecionada + " .");

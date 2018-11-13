@@ -47,6 +47,7 @@ public class MMU {
 				}
 			}
 			
+			mostrarMemoriaFisica();
 		} else {
 			System.out.println("Pagina " + paginaVirtual + " nao se encontra na memoria fisica.(MISS)");
 			//varrer a fila procurando um pte para substituir e setar o bit de referencia com 1
@@ -71,9 +72,11 @@ public class MMU {
 					fila.remove(remover);
 					paginasFisicas[remover.getPte().getPaginaFisica()] = paginaVirtual;	// substitui o valor na memoria fisica
 					pte.setPaginaFisica(remover.getPte().getPaginaFisica());
+					pte.setBitValidade(1);
 					EstruturaFila novaEstrutura = new EstruturaFila(1, pte);
 					fila.add(novaEstrutura);
 					System.out.println("Pagina " + paginaVirtual + " foi mapeada na memoria fisica.");
+					mostrarMemoriaFisica();
 				} else {
 					requisitar(paginaVirtual, numProcesso);
 				}
@@ -90,13 +93,14 @@ public class MMU {
 							fila.add(novaEstrutura);
 							System.out.println("Pagina " + paginaVirtual + " foi mapeada na memoria fisica.");
 							adicionado = true;
+							mostrarMemoriaFisica();
 						}
 					}
 				}
 			}	
 		}
 		
-		mostrarMemoriaFisica();
+		
 		
 	}
 	
